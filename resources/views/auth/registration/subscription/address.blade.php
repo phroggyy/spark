@@ -5,6 +5,40 @@
 
 		<form class="form-horizontal" role="form" id="subscription-basics-form">
 
+			<div class="col-md-6 col-md-offset-4">
+				<div class="form-group">
+					<div class="radio radio-inline">
+						<label>
+							<input type="radio" name="customer_type" id="customer_type1" value="consumer" v-model="addressForm.customerType" checked>
+							Private
+						</label>
+					</div>
+					<div class="radio radio-inline">
+						<label>
+							<input type="radio" name="customer_type" id="customer_type2" value="company" v-model="addressForm.customerType">
+							Company
+						</label>
+					</div>
+				</div>
+			</div>
+
+			<template v-if="addressForm.customerType == 'company'">
+				<div class="form-group">
+					<label class="col-md-4 control-label">Company</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="company" v-model="addressForm.company">
+					</div>
+				</div>
+
+				<div class="form-group">
+					<label class="col-md-4 control-label">EU VAT ID</label>
+					<div class="col-md-6">
+						<input type="text" class="form-control" name="vat_id" v-model="addressForm.vatId">
+						<span class="help-block">If you do not have an EU VAT ID, you will be charged with the VAT of your country of residence.</span>
+					</div>
+				</div>
+			</template>
+
 			<div class="form-group">
 				<label class="col-md-4 control-label">Street</label>
 				<div class="col-md-6">

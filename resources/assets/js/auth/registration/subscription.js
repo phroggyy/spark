@@ -39,6 +39,10 @@ Vue.component('spark-subscription-register-screen', {
 
             cardForm: {
                 number: '', cvc: '', month: '', year: '', zip: '', errors: []
+            },
+
+            addressForm: {
+                customer_type: 'private', company: '', vatId: '', street: '', city: '', zip: '', country: ''
             }
         };
     },
@@ -68,7 +72,7 @@ Vue.component('spark-subscription-register-screen', {
 
 
         /*
-         * Get all of the plans that have a mnthly interval.
+         * Get all of the plans that have a monthly interval.
          */
         monthlyPlans: function() {
             return _.filter(this.plans, function(plan) {

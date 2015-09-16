@@ -16,6 +16,8 @@ Vue.component('spark-subscription-register-screen', {
         if (queryString.invitation) {
             this.getInvitation(queryString.invitation);
         }
+
+        VATCalculator.init('#subscription-address-form');
     },
 
 

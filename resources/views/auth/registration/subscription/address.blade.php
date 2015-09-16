@@ -3,7 +3,7 @@
 	<div class="panel-body">
 		<spark-errors form="@{{ registerForm }}"></spark-errors>
 
-		<form class="form-horizontal" role="form" id="subscription-basics-form">
+		<form class="form-horizontal" role="form" id="subscription-address-form" data-amount="@{{ selectedPlan.price * 100 }}">
 
 			<div class="col-md-6 col-md-offset-4">
 				<div class="form-group">
@@ -33,7 +33,7 @@
 				<div class="form-group">
 					<label class="col-md-4 control-label">EU VAT ID</label>
 					<div class="col-md-6">
-						<input type="text" class="form-control" name="vat_id" v-model="addressForm.vatId">
+						<input type="text" class="form-control" name="vat_id" data-vat="vat_number" v-model="addressForm.vatId">
 						<span class="help-block">If you do not have an EU VAT ID, you will be charged with the VAT of your country of residence.</span>
 					</div>
 				</div>

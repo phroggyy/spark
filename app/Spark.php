@@ -573,4 +573,19 @@ class Spark
     {
         return app('request')->is('settings*');
     }
+
+    /**
+     * Determine or set if the application is based in Europe.
+     *
+     * @param  bool  $european
+     * @return bool|null
+     */
+    public static function isEuropean($european = null)
+    {
+        if (is_null($european)) {
+            return array_get(static::$invoiceData, 'european', false);
+        }
+
+        static::$invoiceData['european'] = $european;
+    }
 }

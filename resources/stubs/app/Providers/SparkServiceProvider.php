@@ -83,15 +83,6 @@ class SparkServiceProvider extends ServiceProvider
                         'ip' => $request->getClientIp(),
                         'company' => $request->company,
                         'has_vat_number' => $request->has('vat_number')
-                    ],
-                    'shipping' => [
-                        'name' => $user->name,
-                        'address' => [
-                            'line1' => $request->street_line_1,
-                            'city' => $request->city,
-                            'postal_code' => $request->postal_code,
-                            'country' => $request->country
-                        ],
                     ]
                 ]);
             });

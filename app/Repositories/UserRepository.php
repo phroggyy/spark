@@ -108,9 +108,6 @@ class UserRepository implements Contract
         } else {
             $this->createDefaultSubscription($request, $user, $subscription);
         }
-        $subscription->create($request->stripe_token, [
-            'email' => $user->email,
-        ]);
     }
 
     /**

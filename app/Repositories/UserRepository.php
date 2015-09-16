@@ -103,6 +103,25 @@ class UserRepository implements Contract
             $subscription->withCoupon($request->coupon);
         }
 
+        if (Spark::$createSubscriptionsWith) {
+            $this->callCustomUpdater(Spark::$createUsersWith, $request, [$user, $subscription]);
+        } else {
+            $this->createDefaultSubscription($request, $user, $subscription);
+        }
+        $subscription->create($request->stripe_token, [
+            'email' => $user->email,
+        ]);
+    }
+
+    /**
+     * Create the default stripe subscription for a new registration.
+     *
+     * @param Request $request
+     * @param $user
+     * @param $subscription
+     */
+    protected function createDefaultSubscription(Request $request, $user, $subscription)
+    {
         $subscription->create($request->stripe_token, [
             'email' => $user->email,
         ]);

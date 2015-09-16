@@ -60,6 +60,13 @@ class Spark
     public static $createUsersWith;
 
     /**
+     * The callback used to create new subscriptions.
+     *
+     * @var callable|null
+     */
+    public static $createSubscriptionsWith;
+
+    /**
      * Indicates if two-factor authentication is supported.
      *
      * @var bool
@@ -345,6 +352,17 @@ class Spark
     public static function createUsersWith($callback)
     {
         static::$createUsersWith = $callback;
+    }
+
+    /**
+     * Set a callback to be used to create new user subscriptions.
+     *
+     * @param  callable|string  $callback
+     * @return void
+     */
+    public static function createSubscriptionsWith($callback)
+    {
+        static::$createSubscriptionsWith = $callback;
     }
 
     /**

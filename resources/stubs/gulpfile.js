@@ -14,7 +14,8 @@ var elixir = require('laravel-elixir');
 elixir(function(mix) {
     mix.sass('app.scss')
         .scripts([
-            'vat_calculator.js'
+            'vat_calculator.js',
+            'app.js'
         ], 'public/js/app.js')
        .browserify('app.js');
 });

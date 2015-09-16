@@ -29,6 +29,11 @@
 		</div>
 	</div>
 
+	<!-- Subscription EU address information -->
+	@if (Spark::isEuropean())
+		@include('spark::settings.tabs.subscription.address')
+	@endif
+
 	<!-- Subscription Billing Information -->
 	<div class="panel panel-default">
 		<div class="panel-heading">

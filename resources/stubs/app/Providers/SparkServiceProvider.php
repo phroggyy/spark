@@ -68,6 +68,34 @@ class SparkServiceProvider extends ServiceProvider
         // Spark::createUsersWith(function (Request $request) {
         //     // Return New User Instance...
         // });
+
+        /**
+         * To comply with the EU VAT regulations we need to pass
+         * the user's address, IP and company name to stripe.
+         * This data will also be used for the invoices.
+         */
+        if (Spark::isEuropean()) {
+            Spark::createSubscriptionsWith(function (Request $request, $user, $subscription) {
+                $subscription->create($request->stripe_token, [
+                    'email' => $user->email,
+                    'description' => $user->name,
+                    'metadata' => [
+                        'ip' => $request->getClientIp(),
+                        'company' => $request->company,
+                        'has_vat_number' => $request->has('vat_number')
+                    ],
+                    'shipping' => [
+                        'name' => $user->name,
+                        'address' => [
+                            'line1' => $request->street_line_1,
+                            'city' => $request->city,
+                            'postal_code' => $request->postal_code,
+                            'country' => $request->country
+                        ],
+                    ]
+                ]);
+            });
+        }
     }
 
     /**

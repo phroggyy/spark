@@ -43,7 +43,7 @@ Vue.component('spark-subscription-register-screen', {
             },
 
             addressForm: {
-                customer_type: 'private', company: '', vatId: '', street: '',
+                customer_type: 'private', company: '', vat_id: '', street: '',
                 city: '', zip: '', country: '', errors: []
             }
         };

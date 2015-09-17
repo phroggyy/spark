@@ -32,6 +32,9 @@ class SparkServiceProvider extends ServiceProvider
     {
         parent::boot();
 
+        // Enable european add-ons if needed
+        Spark::isEuropean( env('SPARK_EUROPEAN') );
+
         //
     }
 

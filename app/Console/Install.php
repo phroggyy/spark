@@ -282,7 +282,8 @@ class Install extends Command
             base_path('.env'),
             PHP_EOL.'AUTHY_KEY='.PHP_EOL.PHP_EOL.
             'STRIPE_KEY='.PHP_EOL.
-            'STRIPE_SECRET='.PHP_EOL
+            'STRIPE_SECRET='.PHP_EOL.PHP_EOL.
+            'SPARK_EUROPEAN='.var_export($this->isEuropean,true).PHP_EOL
         );
     }
 

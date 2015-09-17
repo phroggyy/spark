@@ -53,6 +53,10 @@ Vue.component('spark-settings-subscription-screen', {
                 number: '', cvc: '', month: '', year: '', zip: '', errors: []
             },
 
+            addressForm: {
+                customer_type: 'private', company: '', vatId: '', street: '', city: '', zip: '', country: ''
+            },
+
             changePlanForm: {
                 plan: '', errors: [], changing: false
             },
@@ -333,6 +337,9 @@ Vue.component('spark-settings-subscription-screen', {
                 cvc: this.cardForm.cvc,
                 exp_month: this.cardForm.month,
                 exp_year: this.cardForm.year,
+                address_line1: this.addressForm.street,
+                address_city: this.addressForm.city,
+                address_country: this.addressForm.country,
                 address_zip: this.cardForm.zip
             };
 

@@ -17,7 +17,6 @@ Vue.component('spark-subscription-register-screen', {
             this.getInvitation(queryString.invitation);
         }
 
-        VATCalculator.init('#subscription-address-form');
     },
 
 
@@ -74,7 +73,7 @@ Vue.component('spark-subscription-register-screen', {
 
 
         /*
-         * Get all of the plans that have a monthly interval.
+         * Get all of the plans that have a momnthly interval.
          */
         monthlyPlans: function() {
             return _.filter(this.plans, function(plan) {
@@ -276,8 +275,8 @@ Vue.component('spark-subscription-register-screen', {
 
             setTimeout(function() {
                 $('.spark-first-field')
-                        .filter(':visible:first')
-                        .focus();
+                    .filter(':visible:first')
+                    .focus();
             }, 100);
         },
 
@@ -317,16 +316,19 @@ Vue.component('spark-subscription-register-screen', {
             }
 
             /*
-                Here we will build the payload to send to Stripe, which will
-                return a token. This token can be used to make charges on
-                the user's credit cards instead of storing the numbers.
-            */
+             Here we will build the payload to send to Stripe, which will
+             return a token. This token can be used to make charges on
+             the user's credit cards instead of storing the numbers.
+             */
             var payload = {
                 name: this.registerForm.name,
                 number: this.cardForm.number,
                 cvc: this.cardForm.cvc,
                 exp_month: this.cardForm.month,
                 exp_year: this.cardForm.year,
+                address_line1: this.addressForm.street,
+                address_city: this.addressForm.city,
+                address_country: this.addressForm.country,
                 address_zip: this.cardForm.zip
             };
 

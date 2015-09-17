@@ -104,7 +104,7 @@ class UserRepository implements Contract
         }
 
         if (Spark::$createSubscriptionsWith) {
-            $this->callCustomUpdater(Spark::$createUsersWith, $request, [$user, $subscription]);
+            $this->callCustomUpdater(Spark::$createSubscriptionsWith, $request, [$user, $subscription]);
         } else {
             $this->createDefaultSubscription($request, $user, $subscription);
         }

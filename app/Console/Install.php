@@ -13,7 +13,7 @@ class Install extends Command
      *
      * @var string
      */
-    protected $signature = 'spark:install {--force}';
+    protected $signature = 'spark:install {--force} {--european}';
 
     /**
      * The console command description.
@@ -23,12 +23,23 @@ class Install extends Command
     protected $description = 'Install the Spark scaffolding into the application';
 
     /**
+     * Variable to hold the setting if the EU additions should be installed.
+     *
+     * @var bool
+     */
+    protected $isEuropean = false;
+
+    /**
      * Execute the console command.
      *
      * @return mixed
      */
     public function handle()
     {
+        if ($this->option('european') || $this->confirm('Would you like to install the european regulation tax-management helper?')) {
+            $this->isEuropean = true;
+        }
+
         $this->installNpmPackageConfig();
         $this->installGulpFile();
         $this->installServiceProviders();
@@ -147,8 +158,10 @@ class Install extends Command
      */
     protected function installModels()
     {
+        $stubModel = ( $this->isEuropean ) ? 'EuropeanUser' : 'User';
+
         copy(
-            SPARK_PATH.'/resources/stubs/app/User.php',
+            SPARK_PATH.'/resources/stubs/app/'.$stubModel.'.php',
             app_path('User.php')
         );
 
@@ -212,8 +225,12 @@ class Install extends Command
      */
     protected function installJavaScript()
     {
-        if (! is_dir('resources/assets/js')) {
+        if (!is_dir('resources/assets/js')) {
             mkdir(base_path('resources/assets/js'));
+        }
+
+        if ($this->isEuropean) {
+            (new Process('php artisan vendor:publish --tag=vatcalculator-spark', base_path()))->setTimeout(null)->run();
         }
 
         if (! is_dir('resources/assets/js/spark')) {

@@ -49,7 +49,7 @@
 
 			<!-- EU address Information -->
 			@if (Spark::isEuropean())
-				<div class="row">
+				<div class="row" v-if=" ! freePlanIsSelected">
 					@include('spark::auth.registration.subscription.address')
 				</div>
 			@endif

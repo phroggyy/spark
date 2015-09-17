@@ -5,25 +5,25 @@
 	</div>
 
 	<div class="panel-body">
-
+		<form class="form-horizontal" role="form">
 			<div class="form-group">
 				<label for="number" class="col-sm-4 control-label">Subtotal</label>
 				<div class="col-sm-6">
-					<p class="vat-subtotal"></p>
+					<p class="form-control-static vat-subtotal"></p>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="number" class="col-sm-4 control-label">VAT</label>
 				<div class="col-sm-6">
-					<p class="vat-taxes"></p>
+					<p class="form-control-static vat-taxes"></p>
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label for="number" class="col-sm-4 control-label">Total</label>
 				<div class="col-sm-6">
-					<p class="vat-total"></p>
+					<p class="form-control-static vat-total"></p>
 				</div>
 			</div>
 
@@ -59,5 +59,6 @@
 					</button>
 				</div>
 			</div>
+		</form>
 	</div>
 </div>

@@ -84,6 +84,13 @@ class SparkServiceProvider extends ServiceProvider
          */
         if (Spark::isEuropean()) {
             Spark::createSubscriptionsWith(function (Request $request, $user, $subscription) {
+                /**
+                 * Apply tax rate from the given country.
+                 * If a valid VAT ID is given, the VAT
+                 * rate will be set to 0.
+                 */
+                $user->setTaxForCountry($request->country, $request->has('vat_id'));
+
                 $subscription->create($request->stripe_token, [
                     'email' => $user->email,
                     'description' => $user->name,

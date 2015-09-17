@@ -32,9 +32,6 @@ class SparkServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        // Enable european add-ons if needed
-        Spark::isEuropean( env('SPARK_EUROPEAN') );
-
         //
     }
 
@@ -46,6 +43,7 @@ class SparkServiceProvider extends ServiceProvider
     protected function customizeSpark()
     {
         Spark::configure([
+            'european' => env('SPARK_EUROPEAN'),
             'models' => [
                 'teams' => Team::class,
             ]
@@ -59,14 +57,21 @@ class SparkServiceProvider extends ServiceProvider
      */
     protected function customizeRegistration()
     {
-        // Spark::validateRegistrationsWith(function (Request $request) {
-        //     return [
-        //         'name' => 'required|max:255',
-        //         'email' => 'required|email|unique:users',
-        //         'password' => 'required|confirmed|min:6',
-        //         'terms' => 'required|accepted',
-        //     ];
-        // });
+        if (Spark::isEuropean()) {
+            Spark::validateRegistrationsWith(function (Request $request, $withSubscription = false) {
+                return [
+                    'name'     => 'required|max:255',
+                    'email'    => 'required|email|unique:users',
+                    'password' => 'required|confirmed|min:6',
+                    'terms'    => 'required|accepted',
+                    'street'   => 'required',
+                    'city'     => 'required',
+                    'zip'      => 'required',
+                    'country'  => 'required',
+                    'vat_id'   => 'vat_number',
+                ];
+            });
+        }
 
         // Spark::createUsersWith(function (Request $request) {
         //     // Return New User Instance...
@@ -85,7 +90,7 @@ class SparkServiceProvider extends ServiceProvider
                     'metadata' => [
                         'ip' => $request->getClientIp(),
                         'company' => $request->company,
-                        'has_vat_number' => $request->has('vat_number')
+                        'has_vat_number' => $request->has('vat_id')
                     ]
                 ]);
             });

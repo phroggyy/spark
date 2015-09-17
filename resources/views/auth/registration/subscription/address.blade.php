@@ -56,14 +56,14 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label">Postal code</label>
 				<div class="col-md-6">
-					<input type="password" class="form-control" name="password" v-model="addressForm.zip">
+					<input type="text" class="form-control" name="zip" v-model="addressForm.zip">
 				</div>
 			</div>
 
 			<div class="form-group">
 				<label class="col-md-4 control-label">Country</label>
 				<div class="col-md-6">
-					<input type="password" class="form-control" name="country" v-model="addressForm.country">
+					<input type="text" class="form-control" name="country" v-model="addressForm.country">
 				</div>
 			</div>
 

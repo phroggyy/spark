@@ -9,7 +9,7 @@
 			<div class="form-group">
 				<label for="number" class="col-sm-4 control-label">Subtotal</label>
 				<div class="col-sm-6">
-					<p class="form-control-static vat-subtotal"></p>
+					<p class="form-control-static vat-subtotal">@{{ selectedPlanPrice }}</p>
 				</div>
 			</div>
 
@@ -23,7 +23,7 @@
 			<div class="form-group">
 				<label for="number" class="col-sm-4 control-label">Total</label>
 				<div class="col-sm-6">
-					<p class="form-control-static vat-total"></p>
+					<p class="form-control-static vat-total">@{{ selectedPlanPrice }}</p>
 				</div>
 			</div>
 

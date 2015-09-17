@@ -21,7 +21,7 @@ class User extends Model implements AuthorizableContract,
 {
     use Authorizable, Billable, BillableWithinTheEU, CanResetPassword, TwoFactorAuthenticatable {
         BillableWithinTheEU::getTaxPercent insteadof Billable;
-    };
+    }
 
     /**
      * The database table used by the model.

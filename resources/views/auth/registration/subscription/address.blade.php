@@ -1,7 +1,7 @@
 <div class="panel panel-default">
 	<div class="panel-heading">Address information</div>
 	<div class="panel-body">
-		<spark-errors form="@{{ registerForm }}"></spark-errors>
+		<spark-errors form="@{{ addressForm }}"></spark-errors>
 
 		<form class="form-horizontal" role="form" id="subscription-address-form" data-amount="@{{ selectedPlan.price * 100 }}">
 

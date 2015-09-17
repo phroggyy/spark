@@ -43,7 +43,8 @@ Vue.component('spark-subscription-register-screen', {
             },
 
             addressForm: {
-                customer_type: 'private', company: '', vatId: '', street: '', city: '', zip: '', country: ''
+                customer_type: 'private', company: '', vatId: '', street: '',
+                city: '', zip: '', country: '', errors: []
             }
         };
     },
@@ -309,6 +310,7 @@ Vue.component('spark-subscription-register-screen', {
 
             this.cardForm.errors = [];
             this.registerForm.errors = [];
+            this.addressForm.errors = [];
             this.registerForm.registering = true;
 
             if (this.freePlanIsSelected) {
@@ -356,13 +358,14 @@ Vue.component('spark-subscription-register-screen', {
                 this.registerForm.invitation = this.invitation.token;
             }
 
-            this.$http.post('/register', this.registerForm)
+            this.$http.post('/register', _({}).extend(this.registerForm, this.addressForm))
                 .success(function(response) {
                     window.location = '/home';
                 })
                 .error(function(errors) {
                     this.registerForm.registering = false;
-                    Spark.setErrorsOnForm(this.registerForm, errors);
+                    Spark.setErrorsOnForm(this.registerForm, _.omit(errors, _.keys(this.addressForm)));
+                    Spark.setErrorsOnForm(this.addressForm,  _.omit(errors, _.keys(this.registerForm)));
                 });
         },
 

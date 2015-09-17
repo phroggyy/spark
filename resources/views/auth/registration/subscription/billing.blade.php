@@ -48,39 +48,40 @@
 					<input type="text" class="form-control" name="zip" v-model="cardForm.zip">
 				</div>
 			</div>
-
-			<div class="form-group">
-				<div class="col-sm-6 col-sm-offset-4">
-					<div class="checkbox">
-						<label>
-							<input type="checkbox" v-model="registerForm.terms">
-							I Accept The <a href="/terms" target="_blank">Terms Of Service</a>
-						</label>
+			@if (! Spark::isEuropean())
+				<div class="form-group">
+					<div class="col-sm-6 col-sm-offset-4">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" v-model="registerForm.terms">
+								I Accept The <a href="/terms" target="_blank">Terms Of Service</a>
+							</label>
+						</div>
 					</div>
 				</div>
-			</div>
 
-			<div class="form-group">
-				<div class="col-sm-6 col-sm-offset-4">
-					<button type="submit" class="btn btn-primary" v-on="click: register" v-attr="disabled: registerForm.registering">
-						<span v-if="registerForm.registering">
-							<i class="fa fa-btn fa-spinner fa-spin"></i> Registering
-						</span>
-
-						<span v-if=" ! registerForm.registering">
-							<i class="fa fa-btn fa-check-circle"></i>
-
-							<span v-if=" ! selectedPlan.trialDays">
-								Register
+				<div class="form-group">
+					<div class="col-sm-6 col-sm-offset-4">
+						<button type="submit" class="btn btn-primary" v-on="click: register" v-attr="disabled: registerForm.registering">
+							<span v-if="registerForm.registering">
+								<i class="fa fa-btn fa-spinner fa-spin"></i> Registering
 							</span>
 
-							<span v-if="selectedPlan.trialDays">
-								Begin @{{ selectedPlan.trialDays }} Day Trial
+							<span v-if=" ! registerForm.registering">
+								<i class="fa fa-btn fa-check-circle"></i>
+
+								<span v-if=" ! selectedPlan.trialDays">
+									Register
+								</span>
+
+								<span v-if="selectedPlan.trialDays">
+									Begin @{{ selectedPlan.trialDays }} Day Trial
+								</span>
 							</span>
-						</span>
-					</button>
+						</button>
+					</div>
 				</div>
-			</div>
+			@endif
 		</form>
 	</div>
 </div>

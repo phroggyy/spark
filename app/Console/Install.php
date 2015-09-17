@@ -225,7 +225,7 @@ class Install extends Command
      */
     protected function installJavaScript()
     {
-        if (!is_dir('resources/assets/js')) {
+        if (! is_dir('resources/assets/js')) {
             mkdir(base_path('resources/assets/js'));
         }
 

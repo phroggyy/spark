@@ -166,6 +166,17 @@ Vue.component('spark-subscription-register-screen', {
             }
         },
 
+        /**
+         * Calculates the VAT and updates subtotal, total, tax
+         * HTML elements. It's triggered onBlur for the
+         * data-vat="vat-number" input element
+         */
+        calculateVAT: function() {
+            if (Spark.isEuropean) {
+                VATCalculator.calculate();
+            }
+        },
+
         /*
          * Get all of the Spark plans from the API.
          */

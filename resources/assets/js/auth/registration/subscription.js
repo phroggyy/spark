@@ -44,7 +44,7 @@ Vue.component('spark-subscription-register-screen', {
 
             addressForm: {
                 customer_type: 'private', company: '', vat_id: '', street: '',
-                city: '', zip: '', country: '', errors: []
+                city: '', zip: '', country: '', errors: [], valid_vat_id: null
             }
         };
     },
@@ -173,7 +173,10 @@ Vue.component('spark-subscription-register-screen', {
          */
         calculateVAT: function() {
             if (Spark.isEuropean) {
-                VATCalculator.calculate();
+                var self = this;
+                VATCalculator.calculate(function(result) {
+                    self.addressForm.valid_vat_id = result.valid_vat_id;
+                });
             }
         },
 

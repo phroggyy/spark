@@ -30,10 +30,12 @@
 					</div>
 				</div>
 
-				<div class="form-group">
+				<div class="form-group has-feedback">
 					<label class="col-md-4 control-label">EU VAT ID</label>
 					<div class="col-md-6">
 						<input type="text" class="form-control" name="vat_id" data-vat="vat-number" v-on="blur: calculateVAT" v-model="addressForm.vat_id">
+						<span v-if="addressForm.valid_vat_id===true" class="fa fa-check form-control-feedback" aria-hidden="true"></span>
+						<span v-if="addressForm.valid_vat_id===false" class="fa fa-warning form-control-feedback" aria-hidden="true"></span>
 						<span class="help-block">If you do not have an EU VAT ID, you will be charged with the VAT of your country of residence.</span>
 					</div>
 				</div>

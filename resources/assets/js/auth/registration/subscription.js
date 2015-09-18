@@ -352,7 +352,7 @@ Vue.component('spark-subscription-register-screen', {
                 address_line1: this.addressForm.street,
                 address_city: this.addressForm.city,
                 address_country: this.addressForm.country,
-                address_zip: this.cardForm.zip
+                address_zip: (Spark.isEuropean) ? this.addressForm.zip : this.cardForm.zip
             };
 
             Stripe.card.createToken(payload, function (status, response) {

@@ -51,7 +51,7 @@
 			<div class="form-group">
 				<label class="col-md-4 control-label">City</label>
 				<div class="col-md-6">
-					<input type="email" class="form-control" name="city" v-model="addressForm.city">
+					<input type="text" class="form-control" name="city" v-model="addressForm.city">
 				</div>
 			</div>
 

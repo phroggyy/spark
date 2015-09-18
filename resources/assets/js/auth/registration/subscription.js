@@ -49,8 +49,19 @@ Vue.component('spark-subscription-register-screen', {
         };
     },
 
+    /*
+     * Configure watched data listeners.
+     */
+    watch: {
+        'selectedPlan': function (value, oldValue) {
+            if (value) {
+                this.initializeVATCalculator();
+            }
+        },
+    },
 
     computed: {
+
         /*
          * Determine if the plans have been loaded from the API.
          */
@@ -145,6 +156,16 @@ Vue.component('spark-subscription-register-screen', {
 
 
     methods: {
+        /**
+         * Initialize the VAT calculator, when a plan was selected
+         * and Spark is configured to be used within the EU
+         */
+        initializeVATCalculator: function() {
+            if (Spark.isEuropean) {
+                VATCalculator.init("#subscription-address-form");
+            }
+        },
+
         /*
          * Get all of the Spark plans from the API.
          */

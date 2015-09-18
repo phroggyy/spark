@@ -97,7 +97,8 @@ class SparkServiceProvider extends ServiceProvider
                     'metadata' => [
                         'ip' => $request->getClientIp(),
                         'company' => $request->company,
-                        'has_vat_number' => $request->has('vat_id')
+                        'vat_id' => $request->vat_id,
+                        'tax_percent' => $user->getTaxPercent()
                     ]
                 ]);
             });

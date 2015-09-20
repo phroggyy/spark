@@ -4,6 +4,12 @@ var settingsSubscriptionScreenForms = {
             number: '', cvc: '', month: '', year: '', zip: '',
             errors: [], updating: false, updated: false
         };
+    },
+    updateAddress: function () {
+        return {
+            company: '', name: '', street: '', city: '', zip: '', country: '',
+            errors: [], updating: false, updated: false
+        };
     }
 };
 
@@ -62,6 +68,8 @@ Vue.component('spark-settings-subscription-screen', {
             },
 
             updateCardForm: settingsSubscriptionScreenForms.updateCard(),
+
+            updateAddressForm: settingsSubscriptionScreenForms.updateAddress(),
 
             extraBillingInfoForm: {
                 text: '', errors: [], updating: false, updated: false
@@ -286,6 +294,10 @@ Vue.component('spark-settings-subscription-screen', {
 
             if (this.user.stripe_id) {
                 this.getCoupon();
+
+                if (Spark.isEuropean) {
+                    this.getBillingAddress();
+                }
             }
         }
     },
@@ -299,6 +311,20 @@ Vue.component('spark-settings-subscription-screen', {
             this.$http.get('spark/api/subscriptions/user/coupon')
                 .success(function (coupon) {
                     this.currentCoupon = coupon;
+                })
+                .error(function () {
+                    //
+                });
+        },
+
+
+        /*
+         * Get the coupon currently applying to the customer.
+         */
+        getBillingAddress: function () {
+            this.$http.get('spark/api/subscriptions/user/billing')
+                .success(function (address) {
+                    _.extend(this.updateAddressForm,address);
                 })
                 .error(function () {
                     //
@@ -457,6 +483,29 @@ Vue.component('spark-settings-subscription-screen', {
                     self.updateCardUsingToken(response.id);
                 }
             });
+        },
+
+
+        /*
+         * Update the user's billing address.
+         */
+        updateBillingAddress: function (e) {
+
+            e.preventDefault();
+
+            this.updateAddressForm.errors = [];
+            this.updateAddressForm.updated = false;
+            this.updateAddressForm.updating = true;
+
+            this.$http.put('settings/user/billing', this.updateAddressForm )
+                .success(function () {
+                    this.updateAddressForm.updated = true;
+                    this.updateAddressForm.updating = false;
+                })
+                .error(function (errors) {
+                    this.updateAddressForm.updating = false;
+                    Spark.setErrorsOnForm(this.updateAddressForm, errors);
+                });
         },
 
 

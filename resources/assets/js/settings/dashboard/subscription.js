@@ -60,7 +60,8 @@ Vue.component('spark-settings-subscription-screen', {
             },
 
             addressForm: {
-                customer_type: 'private', company: '', vatId: '', street: '', city: '', zip: '', country: ''
+                customer_type: 'private', company: '', vat_id: '', street: '',
+                city: '', zip: '', country: '', errors: [], valid_vat_id: null
             },
 
             changePlanForm: {
@@ -294,7 +295,8 @@ Vue.component('spark-settings-subscription-screen', {
 
             if (this.user.stripe_id) {
                 this.getCoupon();
-
+            }
+            if (this.user.stripe_active) {
                 if (Spark.isEuropean) {
                     this.getBillingAddress();
                 }
@@ -302,8 +304,42 @@ Vue.component('spark-settings-subscription-screen', {
         }
     },
 
+    /*
+     * Configure watched data listeners.
+     */
+    watch: {
+        'selectedPlan': function (value, oldValue) {
+            if (value) {
+                this.initializeVATCalculator();
+            }
+        },
+    },
 
     methods: {
+        /**
+         * Initialize the VAT calculator, when a plan was selected
+         * and Spark is configured to be used within the EU
+         */
+        initializeVATCalculator: function() {
+            if (Spark.isEuropean) {
+                VATCalculator.init("#subscription-address-form");
+            }
+        },
+
+        /**
+         * Calculates the VAT and updates subtotal, total, tax
+         * HTML elements. It's triggered onBlur for the
+         * data-vat="vat-number" input element
+         */
+        calculateVAT: function() {
+            if (Spark.isEuropean) {
+                var self = this;
+                VATCalculator.calculate(function(result) {
+                    self.addressForm.valid_vat_id = result.valid_vat_id;
+                });
+            }
+        },
+
         /*
          * Get the coupon currently applying to the customer.
          */
@@ -366,7 +402,7 @@ Vue.component('spark-settings-subscription-screen', {
                 address_line1: this.addressForm.street,
                 address_city: this.addressForm.city,
                 address_country: this.addressForm.country,
-                address_zip: this.cardForm.zip
+                address_zip: (Spark.isEuropean) ? this.addressForm.zip : this.cardForm.zip
             };
 
             Stripe.card.createToken(payload, function (status, response) {
@@ -391,7 +427,9 @@ Vue.component('spark-settings-subscription-screen', {
                     this.subscribeForm.subscribing = false;
                 })
                 .error(function (errors) {
-                    Spark.setErrorsOnForm(this.subscribeForm, errors);
+
+                    Spark.setErrorsOnForm(this.subscribeForm, _.omit(errors, _.keys(this.addressForm)));
+                    Spark.setErrorsOnForm(this.addressForm,  _.omit(errors, _.keys(this.subscribeForm)));
                     this.subscribeForm.subscribing = false;
                 });
         },

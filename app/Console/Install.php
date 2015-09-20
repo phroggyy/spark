@@ -202,6 +202,13 @@ class Install extends Command
             SPARK_PATH.'/resources/views/home.blade.php',
             base_path('resources/views/home.blade.php')
         );
+
+        if ($this->isEuropean) {
+            copy(
+                SPARK_PATH.'/resources/stubs/resources/views/receipt.blade.php',
+                base_path('resources/views/vendor/cashier/receipt.blade.php')
+            );
+        }
     }
 
     /**

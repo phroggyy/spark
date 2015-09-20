@@ -59,17 +59,20 @@ class SparkServiceProvider extends ServiceProvider
     {
         if (Spark::isEuropean()) {
             Spark::validateRegistrationsWith(function (Request $request, $withSubscription = false) {
-                return [
+                $userRules = [
                     'name'     => 'required|max:255',
                     'email'    => 'required|email|unique:users',
                     'password' => 'required|confirmed|min:6',
                     'terms'    => 'required|accepted',
+                ];
+                $addressRules = [
                     'street'   => 'required',
                     'city'     => 'required',
                     'zip'      => 'required',
                     'country'  => 'required',
                     'vat_id'   => 'vat_number',
                 ];
+                return $withSubscription ? array_merge($userRules,$addressRules) : $userRules;
             });
         }
 

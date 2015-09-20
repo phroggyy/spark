@@ -75,6 +75,9 @@
             <td>
                 <br><br>
                 <strong>To:</strong><br />
+                @if( $customer->metadata->company != "" )
+                    {{ $customer->metadata->company }}<br>
+                @endif
                 {{ $card->name }}<br>
                 {{ $card->address_line1 }}<br>
                 {{ $card->address_zip }} {{ $card->address_city }}<br>
@@ -165,6 +168,12 @@
                                         <td>&nbsp;</td>
                                         <td style="text-align: right;"><strong>Includes {{ $invoice->tax_percent }}% VAT</strong></td>
                                         <td><strong>{{ $billable->addCurrencySymbol( $billable->formatCurrency($invoice->tax) ) }}</strong></td>
+                                    </tr>
+                                @elseif( $customer->metadata->vat_id != "" )
+                                    <tr style="border-top:2px solid #000;">
+                                        <td>&nbsp;</td>
+                                        <td style="text-align: right;"><strong>VAT</strong></td>
+                                        <td><strong>Reverse charged</strong></td>
                                     </tr>
                                 @endif
                                 <tr style="border-top:2px solid #000;">
